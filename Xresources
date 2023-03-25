@@ -1,1 +1,92 @@
-/home/jo/.Xresources
+!! Urxvt configuration in X
+URxvt*imLocal: "en_US.UTF-8"
+! do not scroll with output
+URxvt*scrollTtyOutput: false
+!large scrollback is essential
+URxvt.saveLines: 100000
+! scroll in relation to buffer (with mouse scroll or Shift+Page Up)
+URxvt*scrollWithBuffer: false
+! scroll back to the bottom on keypress
+URxvt*scrollTtyKeypress: true
+URxvt.secondaryScreen: on
+URxvt.secondaryScroll: off
+! URxvt.letterSpace: 0
+! URxvt.lineSpace: 0
+URxvt.geometry: 92x24
+URxvt.internalBorder: 4
+URxvt.urgentOnBell: true
+URxvt.iso14755: false
+URxvt*scrollBar: false
+URxvt.resize-font.step: 1.2
+
+URxvt.font:xft:Latin Modern Mono:pixelsize=17, \
+           xft:monospace:pixelsize=17:antialias:false, \
+     	   xft:Font Awesome 6 Free Solid:pixelsize=22:antialias:false, \
+	       xft:Font Awesome 6 Brands:pixelsize=22:antialias:false, \
+	       xft:font\-awesome\-extension:pixelsize=22, \
+	       xft:Symbola:pixelsize=22:antialias:false, \
+           xft:file\-icons:pixelsize=22:antialias:false, \
+           xft:Iosevka Nerd Font Mono:pixelsize=22:antialias:false, \
+           xft:PowerlineSymbols:pixelsize=22:antialias:false, \
+           xft:Powerline Extra Symbols:pixelsize=22:antialias:false,
+           xft:Droid Sans Japanese:pixelsize=17:antialias:false:style=Regular, \
+           xft:Inconsolata Nerd Font:pixelsize=21:antialias:false, \
+           xft:DejavuSansMono Nerd Font:pixelsize=17:antialias:false, \
+           xft:DroidSanMono Font Mono:pixelsize=17:antialias:false, \
+           xft:FiraMono Nerd Font Mono:pixelsize=17:style=oblique:antialias:false, \
+           xft:Noto Sans Mono:size:pixelsize=17:antialias:false:14.5, \
+           xft:RobotoMono Nerd Font Mono:pixelsize=17:antialias:false, \
+	       xft:DejaVu Serif Condensed:style=Bold Oblique:pixelsize=17,antialias:false, \
+     	   xft:DejaVu Sans Condensed:style=Condensed Italics:pixelsize=17,antialias:false, \
+	       xft:DejaVu Sans Condensed:style=Condensed Bold Oblique:pixelsize=17,antialias:false, \
+           xft:Noto Sans JP:style=Regular:pixelsize=17,antialias:false, \
+           xft:Noto Sans JP:style=Thin:pixelsize=17,antialias:false, \
+           xft:Noto Sans JP:style=Medium:pixelsize=17,antialias:false, \
+           xft:Noto Sans JP:style=Black:pixelsize=17,antialias:false, \
+           xft:Noto Sans JP:style=Bold:pixelsize=17,antialias:false, \
+           xft:Noto Sans JP:style=Light:pixelsize=17,antialias:false, \
+           xft:FuraMono:pixelsize=17:antialias:false, \
+           xft:UbuntuMono Nerd Font:pixelsize=17:antialias:false, \
+           xft:Fira Code Symbol:pixelsize=22:antialias:false, \
+           xft:JetBrainsMono Nerd Font Mono:style=Normal:pixelsize=17:antialias:false, \
+           xft:Feather:style=Regular:pixelsize=17:antialias:false, \
+           xft:Material Icons:style=Regular:pixelsize=17:antialias:false,
+URxvt*depth:      32 
+
+! gruvbox
+*.color0: #282828
+*.color1: #cc241d
+*.color2: #98971a
+*.color3: #d79921
+*.color4: #458588
+*.color5: #b16286
+*.color6: #689d6a
+*.color7: #a89984
+*.color8: #928374
+*.color9: #fb4934
+*.color10: #b8bb26
+*.color11: #fabd2f
+*.color12: #83a598
+*.color13: #d3869b
+*.color14: #8ec07c
+*.color15: #ebdbb2
+*.background: [80]#282828
+! *.background:#000000
+! *.foreground: green
+! *.foreground: #689d6a
+*.foreground: #98971a
+! *.foreground: #ebdbb2
+*.cursorColor: #fe8019
+
+! ! ! enable the extension (note that you must use an absolute path, no ~/...)
+URxvt*perl-ext-common: vim-scrollback
+URxvt.perl-ext-common:default,xresources-256,url-select, resize-font
+URxvt.keysym.M-u: perl:url-select:select_next
+URxvt.url-select.autocopy: true
+URxvt.url-select.launcher: firefox
+URxvt.underlineURLs: true
+URxvt.url-select.button: 2
+URxvt.keysym.C-minus:     resize-font:smaller
+URxvt.keysym.C-plus:      resize-font:bigger
+URxvt.keysym.C-equal:     resize-font:reset
+URxvt.keysym.C-question:  resize-font:show
