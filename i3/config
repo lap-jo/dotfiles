@@ -1,0 +1,376 @@
+# i3 config file (v4)
+#
+# Please see https://i3wm.org/docs/userguide.html for a complete reference!
+#
+# This config file uses keycodes (bindsym) and was written for the QWERTY
+# layout.
+#
+# To get a config file with the same key positions, but for your current
+# layout, use the i3-config-wizard
+#
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+font pango:monospace 11
+
+# This font is widely installed, provides lots of unicode glyphs, right-to-left
+# text rendering and scalability on retina/hidpi displays (thanks to pango).
+#font pango:DejaVu Sans Mono 8
+
+# Start XDG autostart .desktop files using dex. See also
+# https://wiki.archlinux.org/index.php/XDG_Autostart
+exec --no-startup-id dex-autostart --autostart --environment i3
+
+# add installed nixOS desktop entries for installed apps on startup
+exec --no-startup-id ln -s /nix/var/nix/profiles/default/share/applications/* .local/share/applications/
+
+# The combination of xss-lock, nm-applet and pactl is a popular choice, so
+# they are included here as an example. Modify as you see fit.
+
+# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
+# screen before suspend. Use loginctl lock-session to lock your screen.
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock -i ~/Pictures/Wallpapers/Gruvbox/*
+# NetworkManager is the most popular way to manage wireless networks on Linux,
+# and nm-applet is a desktop environment-independent system tray GUI for it.
+# exec --no-startup-id nm-applet
+# autotiling
+exec_always --no-startup-id autotiling
+
+#polkit
+exec --no-startup-id lxpolkit
+
+# the urxvt daemon allowing terminals to run under one session
+exec_always --no-startup-id urxvtd
+
+# Use pactl to adjust volume in PulseAudio.
+set $refresh_i3status killall -SIGUSR1 i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +0.3%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -0.3%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
+
+# use these keys for focus, movement, and resize directions when reaching for
+# the arrows is not convenient
+set $up k
+set $down j
+set $left h
+set $right l
+
+# use Mouse+Mod4 to drag floating windows to their wanted position
+floating_modifier Mod4
+
+# start a terminal
+bindsym Mod4+Return exec --no-startup-id urxvtc
+
+# kill focused window
+bindsym Mod4+Shift+q kill
+
+# start dmenu (a program launcher)
+# bindsym Mod4+d exec --no-startup-id dmenu_run
+# bindsym Mod4+d exec --no-startup-id i3-dmenu-desktop
+# A more modern dmenu replacement is rofi:
+bindsym Mod4+d exec --no-startup-id "rofi -modi drun,run -show drun -show-icons"
+# There also is i3-dmenu-desktop which only displays applications shipping a
+# .desktop file. It is a wrapper around dmenu, so you need that installed.
+# bindsym Mod4+d exec --no-startup-id i3-dmenu-desktop
+
+# change focus
+bindsym Mod4+$left focus left
+bindsym Mod4+$down focus down
+bindsym Mod4+$up focus up
+bindsym Mod4+$right focus right
+
+# alternatively, you can use the cursor keys:
+bindsym Mod4+Left focus left
+bindsym Mod4+Down focus down
+bindsym Mod4+Up focus up
+bindsym Mod4+Right focus right
+
+# move focused window
+bindsym Mod4+Shift+$left move left
+bindsym Mod4+Shift+$down move down
+bindsym Mod4+Shift+$up move up
+bindsym Mod4+Shift+$right move right
+
+# alternatively, you can use the cursor keys:
+bindsym Mod4+Shift+Left move left
+bindsym Mod4+Shift+Down move down
+bindsym Mod4+Shift+Up move up
+bindsym Mod4+Shift+Right move right
+
+# split in horizontal orientation
+bindsym Mod4+Ctrl+h split h
+
+# split in vertical orientation
+bindsym Mod4+Ctrl+v split v
+
+# enter fullscreen mode for the focused container
+bindsym Mod4+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym Mod4+s layout stacking
+bindsym Mod4+w layout tabbed
+bindsym Mod4+e layout toggle split
+
+# toggle tiling / floating
+bindsym Mod4+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym Mod4+space focus mode_toggle
+
+# focus the parent container
+bindsym Mod4+a focus parent
+
+# focus the child container
+#bindsym Mod4+d focus child
+
+# move the currently focused window to the scratchpad
+bindsym Mod4+Shift+minus move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym Mod4+minus scratchpad show
+
+# Define names for default workspaces for which we configure key bindings later on.
+# We use variables to avoid repeating the names in multiple places.
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+assign [class="firefox|firefox-dev|qutebrowser|librewolf"] 1
+assign [class="MuPDF|Zathura|calibre"] 2
+assign [class="thunderbird|tutanota-desktop"] 3
+assign [class="mpv|vlc|cvlc|Stremio"] 4
+assign [class="KeePassXC|Bitwarden"] 5
+assign [class="TelegramDesktop|Beeper"] 6
+assign [class="easyeffects|Pavucontrol"] 7
+
+# switch to workspace
+bindsym Mod4+1 workspace number $ws1
+bindsym Mod4+2 workspace number $ws2
+bindsym Mod4+3 workspace number $ws3
+bindsym Mod4+4 workspace number $ws4
+bindsym Mod4+5 workspace number $ws5
+bindsym Mod4+6 workspace number $ws6
+bindsym Mod4+7 workspace number $ws7
+bindsym Mod4+8 workspace number $ws8
+bindsym Mod4+9 workspace number $ws9
+bindsym Mod4+0 workspace number $ws10
+
+# move focused container to workspace
+bindsym Mod4+Shift+1 move container to workspace number $ws1
+bindsym Mod4+Shift+2 move container to workspace number $ws2
+bindsym Mod4+Shift+3 move container to workspace number $ws3
+bindsym Mod4+Shift+4 move container to workspace number $ws4
+bindsym Mod4+Shift+5 move container to workspace number $ws5
+bindsym Mod4+Shift+6 move container to workspace number $ws6
+bindsym Mod4+Shift+7 move container to workspace number $ws7
+bindsym Mod4+Shift+8 move container to workspace number $ws8
+bindsym Mod4+Shift+9 move container to workspace number $ws9
+bindsym Mod4+Shift+0 move container to workspace number $ws10
+
+# reload the configuration file
+bindsym Mod4+Shift+c exec "i3-msg reload"
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym Mod4+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym Mod4+Shift+e exec --no-startup-id "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym $left       resize shrink width 10 px or 10 ppt
+        bindsym $down       resize grow height 10 px or 10 ppt
+        bindsym $up         resize shrink height 10 px or 10 ppt
+        bindsym $right      resize grow width 10 px or 10 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left        resize shrink width 10 px or 10 ppt
+        bindsym Down        resize grow height 10 px or 10 ppt
+        bindsym Up          resize shrink height 10 px or 10 ppt
+        bindsym Right       resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape or Mod4+r
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym Mod4+r mode "default"
+}
+
+bindsym Mod4+r mode "resize"
+
+#exec xrandr --output eDP-1 --brightness 0.8
+
+
+# compositors
+# exec --no-startup-id compton
+# exec --no-startup-id picom
+#picom with greyscale
+exec --no-startup-id picom --backend glx --window-shader-fg /home/jo/.config/i3/file.glsl
+
+
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+# bar {
+#      # status_command  i3status
+#      position top
+#      i3bar_command i3bar --transparency 8
+#      colors {
+#          # background #000000a6
+#          background #34345560
+#          # background #132C50
+#       }
+#        status_command ~/.config/bumblebee-status/bumblebee-status \
+#         -t solarized \
+#         -m  datetime hostname battery redshift amixer
+# }
+
+
+# i3blocks
+#bar {
+#       status_command i3blocks
+#       position bottom
+#       colors {
+#       background #132C5080
+#        }
+#}
+
+
+exec --no-startup-id feh --bg-fill --random  ~/Pictures/Wallpapers/*
+#exec --no-startup-id feh --nofehbg --bg-fill --random ~/Pictures/Wallpapers/wp2153733-mf-doom-wallpapers.jpg
+#exec --no-startup-id feh --nofehbg --bg-fill ~/Pictures/Wallpapers/wp2452332-red-dead-redemption-2-4k-wallpapers.jpg
+#exec --no-startup-id feh --nofehbg --bg-fill ~/Pictures/Wallpapers/wp4511654-painting-4k-wallpapers.jpg
+#exec --no-startup-id feh --nofehbg --bg-fill ~/Pictures/Wallpapers/rishi-WiCvC9u7OpE-unsplash.jpg
+exec --no-startup-id redshift
+
+# Screenshots
+bindsym Print exec --no-startup-id maim "/home/jo/Pictures/Screenshots/$(date)"
+bindsym Mod4+Print exec --no-startup-id maim --window $(xdotool getactivewindow) "/home/$USER/Pictures/Screenshots/$(date)"
+bindsym Shift+Print exec --no-startup-id maim --select "/home/$USER/Pictures/Screenshots/$(date)"
+
+# Clipboard Screenshots
+bindsym Ctrl+Print exec --no-startup-id maim | xclip -selection clipboard -t image/png
+bindsym Ctrl+Mod4+Print exec --no-startup-id maim --window $(xdotool getactivewindow) | xclip -selection clipboard -t image/png
+bindsym Ctrl+Shift+Print exec --no-startup-id maim --select | xclip -selection clipboard -t image/png
+
+# Launch Firefox 
+bindsym Mod1+w exec --no-startup-id firefox
+
+# Launch FirefoxWeb
+bindsym Mod1+Control+w exec --no-startup-id firefox-dev
+
+# Start Telegram
+bindsym Mod1+Shift+t exec --no-startup-id telegram-desktop
+
+#default_border pixel 0
+#default_floating_border pixel 1
+for_window [class="^.*"] border pixel 2 
+gaps inner 05
+gaps outer 02
+
+focus_follows_mouse no
+# show_marks yes
+
+# bindsym XF86MonBrightnessUp exec brightnessctl set +1.4%; 
+# bindsym XF86MonBrightnessDown exec brightnessctl set 1%- && refresh
+bindsym  XF86MonBrightnessUp exec --no-startup-id light -T 1.4
+bindsym XF86MonBrightnessDown exec --no-startup-id light -T 0.72
+
+#######################################################################
+# automatically start i3-config-wizard to offer the user to create a
+# keysym-based config which used their favorite modifier (alt or windows)
+#
+# i3-config-wizard will not launch if there already is a config file
+# in ~/.config/i3/config (or $XDG_CONFIG_HOME/i3/config if set) or
+# ~/.i3/config.
+#
+# Please remove the following exec line:
+#######################################################################
+#exec i3-config-wizard
+#####################################################################################
+####SCRATCHPADS####################################################################
+#####################################################################################
+# ncmpcpp scratchpad
+bindsym Mod1+Shift+Return exec --no-startup-id urxvtc -name music -e ncmpcpp;
+bindsym Mod1+n [instance="music"] scratchpad show
+
+# ranger
+bindsym Mod1+Shift+r exec --no-startup-id urxvtc -name file -e ranger;
+bindsym Mod1+r [instance="file"] scratchpad show
+
+# bindsym Mod1+Shift+v exec --no-startup-id urxvtc -name volume -e alsamixer
+# bindsym Mod1+v [instance="volume"] scratchpad show
+
+# ncmpcpp forwindow
+for_window [instance="music"] floating enable, move scratchpad
+
+#ranger windows
+for_window [instance="file"] floating enable, move scratchpad
+
+# alamixer
+for_window [instance="volume"] floating enable, move scratchpad
+
+# Tmux
+bindsym Mod1+Shift+m exec --no-startup-id urxvtc -name multi -e tmux;
+# bindsym Mod1+Shift+m exec st -n multi g "144x41" -e tmux
+bindsym Mod1+m [instance="multi"] scratchpad show
+for_window [instance="multi"] floating enable, move scratchpad
+
+# Plex
+bindsym Mod1+Control+Shift+b exec --no-startup-id urxvtc -name rss -e newsboat; 
+bindsym Mod1+Shift+b [instance="rss"] scratchpad show
+for_window [instance="rss"] floating enable, move scratchpad
+
+bindsym Mod1+Shift+p exec --no-startup-id bitwarden
+#bindsym Mod1+p [class="bitwarden"] scratchpad show
+#for_window [class="bitwarden"] floating enable, move scratchpad
+#####################################################################################
+#####################################################################################
+#####################################################################################
+#####################################################################################
+
+################ DRACULA THEME##################################
+   ##########################################
+# class                 border  bground text    indicator child_border
+# client.focused_inactive #1d2021 #1d2021 #F8F8F2 #1d2021   #1d2021
+client.focused_inactive #82BC82 #82BC82 #82BC82 #82BC82 #1d2021
+client.focused          #504945 #44475A #F8F8F2 #504945 #504945
+client.unfocused        #1d2021 #282A36 #BFBFBF #282A36 #282A36
+client.urgent           #504945 #FF5555 #F8F8F2 #FF5555 #FF5555
+client.placeholder      #1d2021 #282A36 #F8F8F2 #282A36 #282A36
+
+# client.background       #F8F8F2
+
+# bar {
+#    status_command i3status
+#    position top
+#    i3bar_command i3bar --transparency 8
+#
+#   colors {
+# 	background #1d2021
+# 	statusline #F8F8F2
+# 	separator  #504945
+#
+# 	focused_workspace  #504945 #504945 #F8F8F2
+# 	active_workspace   #1d2021 #504945 #F8F8F2
+# 	inactive_workspace #1d2021 #282A36 #BFBFBF
+# 	urgent_workspace   #FF5555 #FF5555 #F8F8F2
+# 	binding_mode       #FF5555 #FF5555 #F8F8F2
+#   }
+# }
+
+# bindsym Mod4+d exec "dmenu_run -nf '#F8F8F2' -nb '#1d2021' -sb '#1d2021' -sf '#F8F8F2' -fn 'monospace-10' -p 'dmenu%'"
+
+# polybar
+exec_always --no-startup-id $HOME/polybar-collection/launch.sh

@@ -109,7 +109,7 @@ require("lazy").setup({
 
 {"folke/twilight.nvim"},
 
--- {"ellisonleao/glow.nvim", config = function() require("glow").setup() end}
+{"ellisonleao/glow.nvim", config = function() require("glow").setup() end}
 -- {'iamcco/markdown-preview.nvim'},
 
 'navarasu/onedark.nvim',
