@@ -1,1 +1,0 @@
-/home/jo/.config/i3/
